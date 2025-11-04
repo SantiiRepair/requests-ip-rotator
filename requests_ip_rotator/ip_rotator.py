@@ -312,7 +312,7 @@ class ApiGateway(rq.adapters.HTTPAdapter):
             # Check outputs
             deleted = []
             for future in concurrent.futures.as_completed(futures):
-                deleted += future.result()
+                deleted.append(future.result())
         if self.verbose:
             print(f"Deleted {len(deleted)} endpoints with for site '{self.site}'.")
         return deleted
