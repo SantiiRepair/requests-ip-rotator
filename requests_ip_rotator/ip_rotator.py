@@ -17,8 +17,7 @@ NORTH_AMERICA = [
     "us-east-2",
     "us-west-1",
     "us-west-2",
-    "us-gov-east-1",
-    "us-gov-west-1" "ca-west-1",
+    "ca-west-1",
     "ca-central-1",
     "mx-central-1",
 ]
