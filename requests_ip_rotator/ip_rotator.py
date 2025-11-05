@@ -13,51 +13,51 @@ logger = logging.getLogger(__name__)
 MAX_IPV4 = ipaddress.IPv4Address._ALL_ONES
 
 NORTH_AMERICA = [
-    "us-east-1",      
-    "us-east-2",      
-    "us-west-1",      
-    "us-west-2",   
+    "us-east-1",
+    "us-east-2",
+    "us-west-1",
+    "us-west-2",
     "us-gov-east-1",
-    "us-gov-west-1"
-    "ca-west-1", 
-    "ca-central-1",  
-    "mx-central-1" 
+    "us-gov-west-1" "ca-west-1",
+    "ca-central-1",
+    "mx-central-1",
 ]
 
 EUROPE = [
-    "eu-west-1",      
-    "eu-west-2",      
-    "eu-west-3",     
+    "eu-west-1",
+    "eu-west-2",
+    "eu-west-3",
     "eu-central-1",
-    "eu-central-2",  
-    "eu-south-1",  
-    "eu-south-2",  
-    "eu-north-1",     
+    "eu-central-2",
+    "eu-south-1",
+    "eu-south-2",
+    "eu-north-1",
 ]
 
 ASIA_PACIFIC = [
-    "ap-south-1",    
-    "ap-northeast-3", 
-    "ap-northeast-2", 
-    "ap-southeast-1", 
-    "ap-southeast-2", 
-    "ap-northeast-1", 
-    "ap-east-1",      
+    "ap-south-1",
+    "ap-northeast-3",
+    "ap-northeast-2",
+    "ap-southeast-1",
+    "ap-southeast-2",
+    "ap-northeast-1",
+    "ap-east-1",
 ]
 
 SOUTH_AMERICA = [
-    "sa-east-1",      
+    "sa-east-1",
 ]
 
 AFRICA = [
-    "af-south-1",     
+    "af-south-1",
 ]
 
 MIDDLE_EAST = [
     "me-south-1",
     "me-central-1",
-    "il-central-1",     
+    "il-central-1",
 ]
+
 
 class ApiGateway(rq.adapters.HTTPAdapter):
 
@@ -122,7 +122,9 @@ class ApiGateway(rq.adapters.HTTPAdapter):
                 current_apis = ApiGateway.get_gateways(awsclient)
             except botocore.exceptions.ClientError as e:
                 if e.response["Error"]["Code"] == "UnrecognizedClientException":
-                    logger.warning(f"Could not create region (some regions require manual enabling): {region}")
+                    logger.warning(
+                        f"Could not create region (some regions require manual enabling): {region}"
+                    )
                     return {"success": False}
                 else:
                     raise e
@@ -281,7 +283,9 @@ class ApiGateway(rq.adapters.HTTPAdapter):
             self.endpoints = endpoints
             return endpoints
 
-        logger.info(f"Starting API gateway{'s' if len(self.regions) > 1 else ''} in {len(self.regions)} regions.")
+        logger.info(
+            f"Starting API gateway{'s' if len(self.regions) > 1 else ''} in {len(self.regions)} regions."
+        )
         self.endpoints = []
         new_endpoints = 0
 
@@ -303,11 +307,15 @@ class ApiGateway(rq.adapters.HTTPAdapter):
                     if result["new"]:
                         new_endpoints += 1
 
-        logger.info(f"Using {len(self.endpoints)} endpoints with name '{self.api_name}' ({new_endpoints} new).")
+        logger.info(
+            f"Using {len(self.endpoints)} endpoints with name '{self.api_name}' ({new_endpoints} new)."
+        )
         return self.endpoints
 
     def shutdown(self, endpoints=None):
-        logger.info(f"Deleting gateway{'s' if len(self.regions) > 1 else ''} for site '{self.site}'.")
+        logger.info(
+            f"Deleting gateway{'s' if len(self.regions) > 1 else ''} for site '{self.site}'."
+        )
         futures = []
         with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
             for region in self.regions:

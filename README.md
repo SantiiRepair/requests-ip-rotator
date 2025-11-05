@@ -72,7 +72,7 @@ The ApiGateway class can be created with the following optional parameters:
 | Name              | Description                                          | Required    | Default
 | -----------       | -----------                                          | ----------- | -----------
 | site              | The site (without path) requests will be sent to.    | True        |
-| regions           | An array of AWS regions to setup gateways in.        | False       | ip_rotator.DEFAULT_REGIONS
+| regions           | An array of [AWS regions](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.RegionsAndAvailabilityZones.html) to setup gateways in.        | False       | ip_rotator.DEFAULT_REGIONS
 | access_key_id     | AWS Access Key ID (will override env variables).     | False       | *Relies on env variables.*
 | access_key_secret | AWS Access Key Secret (will override env variables). | False       | *Relies on env variables.*
 | verbose           | Include status and error messages.                   | False       | True
